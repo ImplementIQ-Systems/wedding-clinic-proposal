@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wedding Clinic — Proposta Light</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Jost',sans-serif;color:#2c2825;background:#ffffff}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:18px 48px;background:#ffffff;border-bottom:0.5px solid #ede8e2;position:sticky;top:0;z-index:100}
+  .logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;letter-spacing:0.15em;color:#2c2825}
+  .nav-links{display:flex;gap:32px}
+  .nav-links a{font-size:11px;font-weight:300;letter-spacing:0.12em;color:#9a8f87;text-decoration:none;text-transform:uppercase}
+  .nav-links a:hover{color:#2c2825}
+  .hero{position:relative;height:560px;background:#f7f3ef;display:flex;align-items:center;overflow:hidden}
+  .hero-left{flex:1;padding:0 0 0 72px;position:relative;z-index:2}
+  .hero-right{width:42%;height:100%;position:relative;overflow:hidden}
+  .hero-right img{width:100%;height:100%;object-fit:cover;object-position:center top}
+  .hero-right::before{content:'';position:absolute;left:0;top:0;bottom:0;width:80px;background:linear-gradient(to right,#f7f3ef,transparent);z-index:1}
+  .hero-tag{font-size:10px;letter-spacing:0.28em;color:#b8956a;text-transform:uppercase;margin-bottom:20px;font-weight:300}
+  .hero-title{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;color:#2c2825;line-height:1.15;font-style:italic;margin-bottom:14px}
+  .hero-sub{font-size:12px;font-weight:300;letter-spacing:0.14em;color:#9a8f87;margin-bottom:36px;text-transform:uppercase}
+  .btn{display:inline-block;padding:13px 36px;border:0.5px solid #2c2825;color:#2c2825;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;font-weight:300;background:transparent;text-decoration:none;transition:all 0.25s}
+  .btn:hover{background:#2c2825;color:#ffffff}
+  .btn-outline{border-color:#b8956a;color:#b8956a;margin-left:14px}
+  .btn-outline:hover{background:#b8956a;color:#ffffff}
+  .info-strip{background:#f0ebe4;padding:44px 48px;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background-color:#ddd6cc}
+  .info-item{background:#f0ebe4;padding:36px 32px;text-align:center}
+  .info-divider{width:24px;height:0.5px;background:#b8956a;margin:0 auto 14px}
+  .info-title{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:300;color:#2c2825;font-style:italic;margin-bottom:6px}
+  .info-text{font-size:11px;color:#9a8f87;font-weight:300;letter-spacing:0.06em;line-height:1.7}
+  .section{padding:64px 48px}
+  .section-label{font-size:10px;letter-spacing:0.28em;color:#b8956a;text-transform:uppercase;margin-bottom:8px;font-weight:300}
+  .section-title{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:300;color:#2c2825;font-style:italic;margin-bottom:8px}
+  .section-desc{font-size:13px;color:#9a8f87;font-weight:300;line-height:1.75;max-width:500px;margin-bottom:44px}
+  .catalog-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+  .dress-card{cursor:pointer}
+  .dress-img{width:100%;aspect-ratio:2/3;overflow:hidden;background:#ede8e2;position:relative}
+  .dress-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.65s cubic-bezier(0.25,0.46,0.45,0.94);display:block}
+  .dress-card:hover .dress-img img{transform:scale(1.07)}
+  .dress-overlay{position:absolute;inset:0;background:rgba(247,243,239,0);display:flex;align-items:flex-end;justify-content:center;padding-bottom:20px;transition:background 0.35s}
+  .dress-card:hover .dress-overlay{background:rgba(247,243,239,0.7)}
+  .overlay-btn{opacity:0;transform:translateY(10px);transition:all 0.3s;font-size:10px;letter-spacing:0.18em;color:#2c2825;border:0.5px solid #2c2825;padding:9px 20px;text-transform:uppercase;font-weight:300;background:rgba(255,255,255,0.9)}
+  .dress-card:hover .overlay-btn{opacity:1;transform:translateY(0)}
+  .dress-name{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:300;color:#2c2825;margin-top:12px;font-style:italic}
+  .dress-tag{font-size:10px;letter-spacing:0.1em;color:#b8956a;font-weight:300;margin-top:3px;text-transform:uppercase}
+  .marcacao{background:#2c2825;padding:72px 48px;text-align:center}
+  .marcacao .section-label{color:#b8956a}
+  .marcacao .section-title{color:#f5f0e8}
+  .marcacao .section-desc{color:#8a7d74;margin:0 auto 36px}
+  .btn-gold{border-color:#c9a96e;color:#c9a96e}
+  .btn-gold:hover{background:#c9a96e;color:#2c2825}
+  footer{background:#f7f3ef;padding:36px 48px;display:flex;align-items:center;justify-content:space-between;border-top:0.5px solid #ddd6cc}
+  .footer-logo{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:300;color:#2c2825;letter-spacing:0.15em;font-style:italic}
+  .footer-info{font-size:11px;color:#9a8f87;font-weight:300;line-height:1.9;text-align:center}
+  .footer-social{display:flex;gap:12px}
+  .social-btn{width:30px;height:30px;border:0.5px solid #ddd6cc;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:11px;color:#9a8f87;transition:all 0.2s;font-weight:300}
+  .social-btn:hover{border-color:#b8956a;color:#b8956a}
+  .wa-btn{position:fixed;bottom:24px;right:24px;width:48px;height:48px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:22px;box-shadow:0 4px 14px rgba(37,211,102,0.3);z-index:200;transition:transform 0.2s}
+  .wa-btn:hover{transform:scale(1.08)}
+  .badge{display:inline-block;padding:4px 14px;background:#ffffff;border:0.5px solid #ddd6cc;font-size:9px;letter-spacing:0.14em;color:#9a8f87;text-transform:uppercase;cursor:pointer;transition:all 0.2s}
+  .badge.active,.badge:hover{background:#2c2825;color:#f5f0e8;border-color:#2c2825}
+  .catalog-header{padding:44px 48px 20px;border-bottom:0.5px solid #ede8e2;display:flex;align-items:flex-end;justify-content:space-between}
+  .filters{display:flex;gap:8px}
+  .awards{display:flex;gap:20px;align-items:center;justify-content:center;padding:32px 48px;border-top:0.5px solid #ede8e2}
+  .award-img{width:64px;height:64px;object-fit:contain;opacity:0.7}
+  @media(max-width:700px){
+    nav{padding:14px 20px}.nav-links{display:none}
+    .hero{flex-direction:column;height:auto}.hero-left{padding:40px 20px}.hero-right{width:100%;height:320px}
+    .hero-right::before{display:none}
+    .info-strip{grid-template-columns:1fr}
+    .section{padding:44px 20px}.catalog-grid{grid-template-columns:repeat(2,1fr)}
+    .marcacao{padding:48px 20px}footer{flex-direction:column;gap:20px;text-align:center;padding:28px 20px}
+    .catalog-header{flex-direction:column;align-items:flex-start;gap:16px;padding:32px 20px 16px}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Wedding Clinic</div>
+  <div class="nav-links">
+    <a href="#catalogo">Vestidos</a>
+    <a href="#">Sobre nós</a>
+    <a href="#">Imprensa</a>
+    <a href="#">Blog</a>
+    <a href="#marcacao">Contacto</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Seixal &nbsp;·&nbsp; Desde 1997</div>
+    <div class="hero-title">O seu vestido<br>mais especial</div>
+    <div class="hero-sub">Coleção exclusiva &nbsp;·&nbsp; Atendimento personalizado</div>
+    <a href="#catalogo" class="btn">Ver coleção</a>
+    <a href="#marcacao" class="btn btn-outline">Marcar visita</a>
+  </div>
+  <div class="hero-right">
+    <img src="https://static.wixstatic.com/media/15b38d_03e3cc5643794a8fbfa5de9a2d686bf9~mv2.jpeg/v1/fill/w_305,h_458,al_c,q_80,enc_avif,quality_auto/15b38d_03e3cc5643794a8fbfa5de9a2d686bf9~mv2.jpeg" alt="Vestido de noiva">
+  </div>
+</div>
+
+<div class="info-strip">
+  <div class="info-item">
+    <div class="info-divider"></div>
+    <div class="info-title">Coleção Flash</div>
+    <div class="info-text">Modelos únicos e exclusivos<br>disponíveis só em loja</div>
+  </div>
+  <div class="info-item">
+    <div class="info-divider"></div>
+    <div class="info-title">Coleção Signature</div>
+    <div class="info-text">Novos modelos regularmente<br>para cada noiva especial</div>
+  </div>
+  <div class="info-item">
+    <div class="info-divider"></div>
+    <div class="info-title">Prémios & Imprensa</div>
+    <div class="info-text">Reconhecimento nacional<br>casamentos.pt e zankyou</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">Destaque</div>
+  <div class="section-title">Vestidos em evidência</div>
+  <div class="section-desc">Uma seleção da nossa coleção atual. Venha experimentar na loja com marcação prévia.</div>
+  <div class="catalog-grid">
+    <div class="dress-card">
+      <div class="dress-img">
+        <img src="https://static.wixstatic.com/media/15b38d_03e3cc5643794a8fbfa5de9a2d686bf9~mv2.jpeg/v1/fill/w_305,h_458,al_c,q_80,enc_avif,quality_auto/15b38d_03e3cc5643794a8fbfa5de9a2d686bf9~mv2.jpeg" alt="Sylvia">
+        <div class="dress-overlay"><div class="overlay-btn">Ver detalhes</div></div>
+      </div>
+      <div class="dress-name">Sylvia</div><div class="dress-tag">Signature</div>
+    </div>
+    <div class="dress-card">
+      <div class="dress-img">
+        <img src="https://static.wixstatic.com/media/15b38d_7e01d26b41514651908365226833e853~mv2.jpg/v1/fill/w_585,h_808,al_c,q_85,enc_avif,quality_auto/15b38d_7e01d26b41514651908365226833e853~mv2.jpg" alt="Caetana">
+        <div class="dress-overlay"><div class="overlay-btn">Ver detalhes</div></div>
+      </div>
+      <div class="dress-name">Caetana</div><div class="dress-tag">Signature</div>
+    </div>
+    <div class="dress-card">
+      <div class="dress-img">
+        <img src="https://static.wixstatic.com/media/15b38d_b75295d7b3754f67b05b0231d3d39478~mv2.jpeg/v1/fill/w_682,h_1024,al_c,q_85,enc_avif,quality_auto/15b38d_b75295d7b3754f67b05b0231d3d39478~mv2.jpeg" alt="Dahlia">
+        <div class="dress-overlay"><div class="overlay-btn">Ver detalhes</div></div>
+      </div>
+      <div class="dress-name">Dahlia</div><div class="dress-tag">Flash</div>
+    </div>
+    <div class="dress-card">
+      <div class="dress-img">
+        <img src="https://static.wixstatic.com/media/15b38d_05171618cfb242afa799351d3af73ce5~mv2.jpg/v1/fill/w_980,h_1470,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/15b38d_05171618cfb242afa799351d3af73ce5~mv2.jpg" alt="Antonella">
+        <div class="dress-overlay"><div class="overlay-btn">Ver detalhes</div></div>
+      </div>
+      <div class="dress-name">Antonella</div><div class="dress-tag">Signature</div>
+    </div>
+  </div>
+</div>
+
+<div id="catalogo">
+  <div class="catalog-header">
+    <div>
+      <div class="section-label">Coleção completa</div>
+      <div class="section-title" style="margin-bottom:0">Os nossos vestidos</div>
+    </div>
+    <div class="filters">
+      <div class="badge active">Todos</div>
+      <div class="badge">Signature</div>
+      <div class="badge">Flash</div>
+    </div>
+  </div>
+  <div class="section" style="padding-top:32px">
+    <div class="catalog-grid">
+      <div class="dress-card"><div class="dress-img"><img src="https://static.wixstatic.com/media/15b38d_03e3cc5643794a8fbfa5de9a2d686bf9~mv2.jpeg/v1/fill/w_305,h_458,al_c,q_80,enc_avif,quality_auto/15b38d_03e3cc5643794a8fbfa5de9a2d686bf9~mv2.jpeg" alt="Sylvia"><div class="dress-overlay"><div class="overlay-btn">Ver detalhes</div></div></div><div class="dress-name">Sylvia</div><div class="dress-tag">Signature</div></div>
+      <div class="dress-card"><div class="dress-img"><img src="https://static.wixstatic.com/media/15b38d_7e01d26b41514651908365226833e853~mv2.jpg/v1/fill/w_585,h_808,al_c,q_85,enc_avif,quality_auto/15b38d_7e01d26b41514651908365226833e853~mv2.jpg" alt="Caetana"><div class="dress-overlay"><div class="overlay-btn">Ver detalhes</div></div></div><div class="dress-name">Caetana</div><div class="dress-tag">Signature</div></div>
+      <div class="dress-card"><div class="dress-img"><img src="https://static.wixstatic.com/media/15b38d_b75295d7b3754f67b05b0231d3d39478~mv2.jpeg/v1/fill/w_682,h_1024,al_c,q_85,enc_avif,quality_auto/15b38d_b75295d7b3754f67b05b0231d3d39478~mv2.jpeg" alt="Dahlia"><div class="dress-overlay"><div class="overlay-btn">Ver detalhes</div></div></div><div class="dress-name">Dahlia</div><div class="dress-tag">Flash</div></div>
+      <div class="dress-card"><div class="dress-img"><img src="https://static.wixstatic.com/media/15b38d_05171618cfb242afa799351d3af73ce5~mv2.jpg/v1/fill/w_980,h_1470,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/15b38d_05171618cfb242afa799351d3af73ce5~mv2.jpg" alt="Antonella"><div class="dress-overlay"><div class="overlay-btn">Ver detalhes</div></div></div><div class="dress-name">Antonella</div><div class="dress-tag">Signature</div></div>
+      <div class="dress-card"><div class="dress-img"><img src="https://static.wixstatic.com/media/15b38d_86c258556c6b431eaaa98945fea0861a~mv2.jpg/v1/fill/w_980,h_1470,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/15b38d_86c258556c6b431eaaa98945fea0861a~mv2.jpg" alt="Catherine"><div class="dress-overlay"><div class="overlay-btn">Ver detalhes</div></div></div><div class="dress-name">Catherine</div><div class="dress-tag">Signature</div></div>
+      <div class="dress-card"><div class="dress-img"><img src="https://static.wixstatic.com/media/15b38d_4a2b37c6ddca4e3589d66108247a12db~mv2.jpg/v1/fill/w_980,h_1470,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/15b38d_4a2b37c6ddca4e3589d66108247a12db~mv2.jpg" alt="Simone"><div class="dress-overlay"><div class="overlay-btn">Ver detalhes</div></div></div><div class="dress-name">Simone</div><div class="dress-tag">Flash</div></div>
+      <div class="dress-card"><div class="dress-img"><img src="https://static.wixstatic.com/media/15b38d_3cfdbeb08e77420a8e518cccf59e6e17~mv2.jpeg/v1/fill/w_656,h_1024,al_c,q_85,enc_avif,quality_auto/15b38d_3cfdbeb08e77420a8e518cccf59e6e17~mv2.jpeg" alt="Victória"><div class="dress-overlay"><div class="overlay-btn">Ver detalhes</div></div></div><div class="dress-name">Victória</div><div class="dress-tag">Signature</div></div>
+      <div class="dress-card"><div class="dress-img"><img src="https://static.wixstatic.com/media/15b38d_066e3ffff4f94fd1bc1a7b18f08cd7f7~mv2.jpeg/v1/fill/w_684,h_1024,al_c,q_85,enc_avif,quality_auto/15b38d_066e3ffff4f94fd1bc1a7b18f08cd7f7~mv2.jpeg" alt="Penelope"><div class="dress-overlay"><div class="overlay-btn">Ver detalhes</div></div></div><div class="dress-name">Penelope</div><div class="dress-tag">Flash</div></div>
+    </div>
+  </div>
+</div>
+
+<div id="marcacao" class="marcacao">
+  <div class="section-label">Próximo passo</div>
+  <div class="section-title">Marque a sua visita</div>
+  <div class="section-desc">O atendimento na Wedding Clinic é personalizado e por marcação. Escolha o seu momento e venha descobrir o vestido dos seus sonhos.</div>
+  <a href="#" class="btn btn-gold">Agendar online</a>
+  &nbsp;&nbsp;
+  <span style="font-size:13px;color:#8a7d74;font-weight:300">ou ligue</span>
+  &nbsp;&nbsp;
+  <span style="font-size:14px;color:#f5f0e8;font-weight:300">912 929 646</span>
+</div>
+
+<footer>
+  <div class="footer-logo">Wedding Clinic</div>
+  <div class="footer-info">
+    Av. 1º de Dezembro de 1640, nº516, Casal do Marco, Seixal<br>
+    noivas@weddingclinic.pt &nbsp;·&nbsp; 912 929 646
+  </div>
+  <div class="footer-social">
+    <div class="social-btn">f</div>
+    <div class="social-btn">ig</div>
+    <div class="social-btn">tk</div>
+  </div>
+</footer>
+
+<div class="wa-btn" title="WhatsApp">💬</div>
+
+<script>
+  document.querySelectorAll('.badge').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('.badge').forEach(function(x){x.classList.remove('active')});
+      b.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
