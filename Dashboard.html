@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wedding Clinic — Dashboard</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13px;background:#f4f2ef;color:#2c2825;min-height:100vh}
+  .db{display:flex;min-height:100vh}
+  .db-sidebar{width:210px;background:#ffffff;border-right:0.5px solid #e0dbd4;padding:0;flex-shrink:0;position:fixed;top:0;left:0;height:100vh}
+  .db-logo{padding:20px 20px 16px;border-bottom:0.5px solid #e0dbd4}
+  .db-logo-name{font-size:15px;font-weight:600;color:#2c2825;letter-spacing:0.01em}
+  .db-logo-sub{font-size:11px;color:#9a8f87;margin-top:2px}
+  .db-nav{padding:12px 0}
+  .db-nav-section{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#b8a898;padding:8px 20px 4px;font-weight:500}
+  .db-nav-item{display:flex;align-items:center;gap:10px;padding:9px 20px;cursor:pointer;color:#6b6460;transition:all 0.15s;font-size:12px;text-decoration:none;border-left:2px solid transparent}
+  .db-nav-item:hover{background:#f7f3ef;color:#2c2825}
+  .db-nav-item.active{background:#fdf6ee;color:#7a5c2e;border-left-color:#b8956a;font-weight:500}
+  .db-nav-icon{width:15px;height:15px;flex-shrink:0;opacity:0.7}
+  .db-main{flex:1;margin-left:210px;padding:28px 32px;max-width:1100px}
+  .db-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px}
+  .db-title{font-size:18px;font-weight:600;color:#2c2825}
+  .db-subtitle{font-size:12px;color:#9a8f87;margin-top:3px}
+  .db-btn{padding:9px 18px;background:#2c2825;color:#f5f0e8;border:none;border-radius:8px;font-size:12px;cursor:pointer;font-weight:500;transition:opacity 0.15s;font-family:inherit}
+  .db-btn:hover{opacity:0.85}
+  .db-btn-outline{background:transparent;color:#2c2825;border:0.5px solid #ddd6cc}
+  .db-btn-outline:hover{background:#f7f3ef;opacity:1}
+  .db-btn-gold{background:#b8956a;color:#ffffff}
+  .metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
+  .metric{background:#ffffff;border:0.5px solid #e0dbd4;border-radius:10px;padding:16px 18px}
+  .metric-label{font-size:11px;color:#9a8f87;margin-bottom:8px;font-weight:500;text-transform:uppercase;letter-spacing:0.06em}
+  .metric-value{font-size:26px;font-weight:600;color:#2c2825;line-height:1}
+  .metric-sub{font-size:11px;color:#b8a898;margin-top:5px}
+  .card{background:#ffffff;border:0.5px solid #e0dbd4;border-radius:12px;padding:20px 24px;margin-bottom:20px}
+  .card-title{font-size:13px;font-weight:600;color:#2c2825;margin-bottom:16px}
+  .field-label{font-size:11px;color:#9a8f87;margin-bottom:6px;font-weight:500;text-transform:uppercase;letter-spacing:0.06em}
+  textarea{width:100%;border:0.5px solid #e0dbd4;border-radius:8px;padding:10px 12px;font-size:13px;color:#2c2825;background:#faf8f5;resize:none;font-family:inherit;line-height:1.6;transition:border-color 0.15s}
+  textarea:focus{outline:none;border-color:#b8956a;background:#ffffff}
+  input[type=datetime-local]{border:0.5px solid #e0dbd4;border-radius:8px;padding:8px 12px;font-size:12px;color:#2c2825;background:#faf8f5;font-family:inherit;transition:border-color 0.15s}
+  input[type=datetime-local]:focus{outline:none;border-color:#b8956a}
+  .network-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+  .net-chip{display:flex;align-items:center;gap:7px;padding:7px 14px;border:0.5px solid #e0dbd4;border-radius:20px;cursor:pointer;font-size:12px;color:#6b6460;background:#ffffff;transition:all 0.15s;user-select:none;font-family:inherit}
+  .net-chip:hover{border-color:#b8956a}
+  .net-chip.selected{border-color:#b8956a;color:#7a5c2e;background:#fdf6ee;font-weight:500}
+  .net-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+  .upload-area{border:0.5px dashed #c8bfb6;border-radius:8px;padding:24px;text-align:center;cursor:pointer;margin-bottom:20px;transition:all 0.15s;background:#faf8f5}
+  .upload-area:hover{border-color:#b8956a;background:#fdf6ee}
+  .upload-icon{font-size:24px;margin-bottom:6px;color:#c8bfb6}
+  .upload-text{font-size:12px;color:#9a8f87}
+  .upload-sub{font-size:11px;color:#b8a898;margin-top:3px}
+  .action-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .success-banner{display:none;background:#eaf7f0;border:0.5px solid #6fcf97;color:#27774a;border-radius:8px;padding:12px 16px;font-size:12px;margin-top:14px;font-weight:500}
+  .draft-item{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:0.5px solid #f0ebe4}
+  .draft-item:last-child{border-bottom:none}
+  .draft-thumb{width:38px;height:52px;background:#f0ebe4;border-radius:6px;object-fit:cover;flex-shrink:0}
+  .draft-info{flex:1}
+  .draft-title{font-size:12px;font-weight:500;color:#2c2825;margin-bottom:3px}
+  .draft-meta{font-size:11px;color:#9a8f87}
+  .badge{display:inline-block;padding:3px 9px;border-radius:12px;font-size:10px;font-weight:500}
+  .badge-draft{background:#fff8e6;color:#b8860b;border:0.5px solid #f5d87a}
+  .badge-live{background:#eaf7f0;color:#27774a;border:0.5px solid #6fcf97}
+  .dress-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .dress-item{border:0.5px solid #e0dbd4;border-radius:10px;overflow:hidden;background:#ffffff;transition:border-color 0.15s}
+  .dress-item:hover{border-color:#b8956a}
+  .dress-item img{width:100%;aspect-ratio:2/3;object-fit:cover;display:block}
+  .dress-item-info{padding:10px 12px}
+  .dress-item-name{font-size:12px;font-weight:600;color:#2c2825;margin-bottom:2px}
+  .dress-item-col{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.06em}
+  .col-signature{color:#b8956a}
+  .col-flash{color:#6b9eb8}
+  .dress-item-actions{display:flex;gap:6px;margin-top:8px}
+  .dress-btn{flex:1;padding:5px 0;border:0.5px solid #e0dbd4;background:transparent;border-radius:6px;font-size:10px;cursor:pointer;color:#6b6460;transition:all 0.15s;font-family:inherit}
+  .dress-btn:hover{background:#f7f3ef;border-color:#b8956a;color:#2c2825}
+  .dress-btn-del:hover{background:#fff0f0;border-color:#e24b4a;color:#e24b4a}
+  .booking-item{display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:0.5px solid #f0ebe4}
+  .booking-item:last-child{border-bottom:none}
+  .booking-date{width:48px;text-align:center;flex-shrink:0;background:#fdf6ee;border-radius:8px;padding:6px 0}
+  .booking-day{font-size:22px;font-weight:700;color:#2c2825;line-height:1}
+  .booking-month{font-size:10px;color:#b8956a;text-transform:uppercase;letter-spacing:0.08em;font-weight:500}
+  .booking-info{flex:1}
+  .booking-name{font-size:13px;font-weight:600;color:#2c2825}
+  .booking-detail{font-size:11px;color:#9a8f87;margin-top:2px}
+  .booking-actions{display:flex;gap:6px;align-items:center}
+  .btn-confirm{padding:6px 12px;background:#eaf7f0;color:#27774a;border:0.5px solid #6fcf97;border-radius:6px;font-size:11px;cursor:pointer;font-family:inherit;transition:all 0.15s;font-weight:500}
+  .btn-confirm:hover{background:#d4f0e3}
+  .btn-cancel{padding:6px 12px;background:#f7f3ef;color:#9a8f87;border:0.5px solid #e0dbd4;border-radius:6px;font-size:11px;cursor:pointer;font-family:inherit;transition:all 0.15s}
+  .btn-cancel:hover{background:#fff0f0;color:#e24b4a;border-color:#f09595}
+  .confirmed-tag{padding:6px 12px;background:#eaf7f0;color:#27774a;border-radius:6px;font-size:11px;font-weight:500}
+  .db-page{display:none}
+  .db-page.active{display:block}
+  .divider{height:0.5px;background:#e0dbd4;margin:16px 0}
+  .wa-btn{position:fixed;bottom:24px;right:24px;width:50px;height:50px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:22px;box-shadow:0 4px 12px rgba(37,211,102,0.35);z-index:200;transition:transform 0.2s;text-decoration:none}
+  .wa-btn:hover{transform:scale(1.08)}
+  @media(max-width:768px){
+    .db-sidebar{display:none}
+    .db-main{margin-left:0;padding:20px 16px}
+    .metric-grid{grid-template-columns:1fr 1fr}
+    .dress-grid{grid-template-columns:repeat(2,1fr)}
+  }
+</style>
+</head>
+<body>
+
+<div class="db">
+  <aside class="db-sidebar">
+    <div class="db-logo">
+      <div class="db-logo-name">Wedding Clinic</div>
+      <div class="db-logo-sub">Área de gestão</div>
+    </div>
+    <nav class="db-nav">
+      <div class="db-nav-section">Conteúdo</div>
+      <a class="db-nav-item active" onclick="switchPage('publicacoes',this);return false" href="#">
+        <svg class="db-nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="10" rx="1.5"/><line x1="5" y1="7" x2="11" y2="7"/><line x1="5" y1="10" x2="9" y2="10"/></svg>
+        Publicações
+      </a>
+      <a class="db-nav-item" onclick="switchPage('catalogo',this);return false" href="#">
+        <svg class="db-nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="5" height="6" rx="1"/><rect x="9" y="2" width="5" height="6" rx="1"/><rect x="2" y="10" width="5" height="4" rx="1"/><rect x="9" y="10" width="5" height="4" rx="1"/></svg>
+        Catálogo
+      </a>
+      <div class="db-nav-section" style="margin-top:8px">Clientes</div>
+      <a class="db-nav-item" onclick="switchPage('marcacoes',this);return false" href="#">
+        <svg class="db-nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="11" rx="1.5"/><line x1="5" y1="1" x2="5" y2="5"/><line x1="11" y1="1" x2="11" y2="5"/><line x1="2" y1="7" x2="14" y2="7"/></svg>
+        Marcações
+      </a>
+    </nav>
+  </aside>
+
+  <main class="db-main">
+
+    <div class="db-page active" id="page-publicacoes">
+      <div class="db-header">
+        <div>
+          <div class="db-title">Publicações</div>
+          <div class="db-subtitle">Escreve uma vez, publica em todo o lado</div>
+        </div>
+      </div>
+
+      <div class="metric-grid">
+        <div class="metric"><div class="metric-label">Publicadas este mês</div><div class="metric-value">12</div><div class="metric-sub">+3 vs mês anterior</div></div>
+        <div class="metric"><div class="metric-label">Rascunhos guardados</div><div class="metric-value">3</div><div class="metric-sub">Prontos para continuar</div></div>
+        <div class="metric"><div class="metric-label">Agendadas</div><div class="metric-value">2</div><div class="metric-sub">Próximos 7 dias</div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Nova publicação</div>
+
+        <div class="field-label">Texto</div>
+        <textarea id="post-text" rows="4" placeholder="Escreva aqui o texto da sua publicação... pode guardar e retomar depois quando tiver tempo."></textarea>
+
+        <div style="margin-top:16px">
+          <div class="field-label">Imagem</div>
+          <div class="upload-area" onclick="document.getElementById('img-input').click()">
+            <div class="upload-icon">+</div>
+            <div class="upload-text">Clique para adicionar foto</div>
+            <div class="upload-sub">JPG ou PNG · máx. 10MB</div>
+          </div>
+          <input type="file" id="img-input" accept="image/*" style="display:none" onchange="previewImage(this)">
+          <img id="img-preview" style="display:none;max-height:160px;border-radius:8px;margin-bottom:16px;object-fit:cover" alt="preview">
+        </div>
+
+        <div class="field-label">Publicar em</div>
+        <div class="network-row">
+          <div class="net-chip selected" onclick="toggleChip(this)"><div class="net-dot" style="background:#E1306C"></div>Instagram</div>
+          <div class="net-chip selected" onclick="toggleChip(this)"><div class="net-dot" style="background:#1877F2"></div>Facebook</div>
+          <div class="net-chip selected" onclick="toggleChip(this)"><div class="net-dot" style="background:#010101"></div>TikTok</div>
+          <div class="net-chip selected" onclick="toggleChip(this)"><div class="net-dot" style="background:#b8956a"></div>Website</div>
+        </div>
+
+        <div class="field-label">Agendar para (opcional)</div>
+        <div class="action-row" style="margin-top:6px">
+          <input type="datetime-local" id="schedule-time">
+          <button class="db-btn db-btn-outline" onclick="saveDraft()">Guardar rascunho</button>
+          <button class="db-btn db-btn-gold" onclick="publishNow()">Publicar agora</button>
+        </div>
+        <div class="success-banner" id="pub-success">Publicado com sucesso em Instagram, Facebook, TikTok e Website!</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Rascunhos guardados</div>
+        <div class="draft-item">
+          <img class="draft-thumb" src="https://static.wixstatic.com/media/15b38d_7e01d26b41514651908365226833e853~mv2.jpg/v1/fill/w_585,h_808,al_c,q_85,enc_avif,quality_auto/15b38d_7e01d26b41514651908365226833e853~mv2.jpg" alt="">
+          <div class="draft-info">
+            <div class="draft-title">Nova chegada — Caetana</div>
+            <div class="draft-meta">Guardado há 2 dias · Instagram, Facebook</div>
+          </div>
+          <span class="badge badge-draft">Rascunho</span>
+          <button class="db-btn db-btn-outline" style="margin-left:10px;padding:6px 12px;font-size:11px">Continuar</button>
+        </div>
+        <div class="draft-item">
+          <img class="draft-thumb" src="https://static.wixstatic.com/media/15b38d_b75295d7b3754f67b05b0231d3d39478~mv2.jpeg/v1/fill/w_682,h_1024,al_c,q_85,enc_avif,quality_auto/15b38d_b75295d7b3754f67b05b0231d3d39478~mv2.jpeg" alt="">
+          <div class="draft-info">
+            <div class="draft-title">Coleção Flash — Dahlia disponível</div>
+            <div class="draft-meta">Guardado ontem · Todos</div>
+          </div>
+          <span class="badge badge-draft">Rascunho</span>
+          <button class="db-btn db-btn-outline" style="margin-left:10px;padding:6px 12px;font-size:11px">Continuar</button>
+        </div>
+        <div class="draft-item">
+          <img class="draft-thumb" src="https://static.wixstatic.com/media/15b38d_03e3cc5643794a8fbfa5de9a2d686bf9~mv2.jpeg/v1/fill/w_305,h_458,al_c,q_80,enc_avif,quality_auto/15b38d_03e3cc5643794a8fbfa5de9a2d686bf9~mv2.jpeg" alt="">
+          <div class="draft-info">
+            <div class="draft-title">Promoção especial primavera</div>
+            <div class="draft-meta">Agendado para 20 Abr · Todos</div>
+          </div>
+          <span class="badge badge-live">Agendado</span>
+          <button class="db-btn db-btn-outline" style="margin-left:10px;padding:6px 12px;font-size:11px">Editar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="db-page" id="page-catalogo">
+      <div class="db-header">
+        <div>
+          <div class="db-title">Catálogo</div>
+          <div class="db-subtitle">Gere os vestidos do seu site</div>
+        </div>
+        <button class="db-btn db-btn-gold">+ Adicionar vestido</button>
+      </div>
+
+      <div class="metric-grid">
+        <div class="metric"><div class="metric-label">Total de vestidos</div><div class="metric-value">20</div><div class="metric-sub">Visíveis no site</div></div>
+        <div class="metric"><div class="metric-label">Coleção Signature</div><div class="metric-value">13</div><div class="metric-sub">Vestidos activos</div></div>
+        <div class="metric"><div class="metric-label">Coleção Flash</div><div class="metric-value">7</div><div class="metric-sub">Exclusivos em loja</div></div>
+      </div>
+
+      <div class="card">
+        <div class="dress-grid">
+          <div class="dress-item">
+            <img src="https://static.wixstatic.com/media/15b38d_03e3cc5643794a8fbfa5de9a2d686bf9~mv2.jpeg/v1/fill/w_305,h_458,al_c,q_80,enc_avif,quality_auto/15b38d_03e3cc5643794a8fbfa5de9a2d686bf9~mv2.jpeg" alt="Sylvia">
+            <div class="dress-item-info"><div class="dress-item-name">Sylvia</div><div class="dress-item-col col-signature">Signature</div><div class="dress-item-actions"><button class="dress-btn">Editar</button><button class="dress-btn dress-btn-del">Remover</button></div></div>
+          </div>
+          <div class="dress-item">
+            <img src="https://static.wixstatic.com/media/15b38d_7e01d26b41514651908365226833e853~mv2.jpg/v1/fill/w_585,h_808,al_c,q_85,enc_avif,quality_auto/15b38d_7e01d26b41514651908365226833e853~mv2.jpg" alt="Caetana">
+            <div class="dress-item-info"><div class="dress-item-name">Caetana</div><div class="dress-item-col col-signature">Signature</div><div class="dress-item-actions"><button class="dress-btn">Editar</button><button class="dress-btn dress-btn-del">Remover</button></div></div>
+          </div>
+          <div class="dress-item">
+            <img src="https://static.wixstatic.com/media/15b38d_b75295d7b3754f67b05b0231d3d39478~mv2.jpeg/v1/fill/w_682,h_1024,al_c,q_85,enc_avif,quality_auto/15b38d_b75295d7b3754f67b05b0231d3d39478~mv2.jpeg" alt="Dahlia">
+            <div class="dress-item-info"><div class="dress-item-name">Dahlia</div><div class="dress-item-col col-flash">Flash</div><div class="dress-item-actions"><button class="dress-btn">Editar</button><button class="dress-btn dress-btn-del">Remover</button></div></div>
+          </div>
+          <div class="dress-item">
+            <img src="https://static.wixstatic.com/media/15b38d_05171618cfb242afa799351d3af73ce5~mv2.jpg/v1/fill/w_980,h_1470,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/15b38d_05171618cfb242afa799351d3af73ce5~mv2.jpg" alt="Antonella">
+            <div class="dress-item-info"><div class="dress-item-name">Antonella</div><div class="dress-item-col col-signature">Signature</div><div class="dress-item-actions"><button class="dress-btn">Editar</button><button class="dress-btn dress-btn-del">Remover</button></div></div>
+          </div>
+          <div class="dress-item">
+            <img src="https://static.wixstatic.com/media/15b38d_86c258556c6b431eaaa98945fea0861a~mv2.jpg/v1/fill/w_980,h_1470,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/15b38d_86c258556c6b431eaaa98945fea0861a~mv2.jpg" alt="Catherine">
+            <div class="dress-item-info"><div class="dress-item-name">Catherine</div><div class="dress-item-col col-signature">Signature</div><div class="dress-item-actions"><button class="dress-btn">Editar</button><button class="dress-btn dress-btn-del">Remover</button></div></div>
+          </div>
+          <div class="dress-item">
+            <img src="https://static.wixstatic.com/media/15b38d_4a2b37c6ddca4e3589d66108247a12db~mv2.jpg/v1/fill/w_980,h_1470,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/15b38d_4a2b37c6ddca4e3589d66108247a12db~mv2.jpg" alt="Simone">
+            <div class="dress-item-info"><div class="dress-item-name">Simone</div><div class="dress-item-col col-flash">Flash</div><div class="dress-item-actions"><button class="dress-btn">Editar</button><button class="dress-btn dress-btn-del">Remover</button></div></div>
+          </div>
+          <div class="dress-item">
+            <img src="https://static.wixstatic.com/media/15b38d_3cfdbeb08e77420a8e518cccf59e6e17~mv2.jpeg/v1/fill/w_656,h_1024,al_c,q_85,enc_avif,quality_auto/15b38d_3cfdbeb08e77420a8e518cccf59e6e17~mv2.jpeg" alt="Victória">
+            <div class="dress-item-info"><div class="dress-item-name">Victória</div><div class="dress-item-col col-signature">Signature</div><div class="dress-item-actions"><button class="dress-btn">Editar</button><button class="dress-btn dress-btn-del">Remover</button></div></div>
+          </div>
+          <div class="dress-item">
+            <img src="https://static.wixstatic.com/media/15b38d_066e3ffff4f94fd1bc1a7b18f08cd7f7~mv2.jpeg/v1/fill/w_684,h_1024,al_c,q_85,enc_avif,quality_auto/15b38d_066e3ffff4f94fd1bc1a7b18f08cd7f7~mv2.jpeg" alt="Penelope">
+            <div class="dress-item-info"><div class="dress-item-name">Penelope</div><div class="dress-item-col col-flash">Flash</div><div class="dress-item-actions"><button class="dress-btn">Editar</button><button class="dress-btn dress-btn-del">Remover</button></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="db-page" id="page-marcacoes">
+      <div class="db-header">
+        <div>
+          <div class="db-title">Marcações</div>
+          <div class="db-subtitle">Visitas agendadas à loja</div>
+        </div>
+      </div>
+
+      <div class="metric-grid">
+        <div class="metric"><div class="metric-label">Esta semana</div><div class="metric-value">4</div><div class="metric-sub">Visitas agendadas</div></div>
+        <div class="metric"><div class="metric-label">Por confirmar</div><div class="metric-value">2</div><div class="metric-sub">Aguardam resposta</div></div>
+        <div class="metric"><div class="metric-label">Este mês</div><div class="metric-value">11</div><div class="metric-sub">Total de visitas</div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Próximas visitas</div>
+        <div class="booking-item">
+          <div class="booking-date"><div class="booking-day">14</div><div class="booking-month">Abr</div></div>
+          <div class="booking-info"><div class="booking-name">Ana Ferreira</div><div class="booking-detail">14:00 · Vestido para casamento em Junho</div></div>
+          <div class="booking-actions">
+            <button class="btn-confirm" onclick="confirmBooking(this)">Confirmar</button>
+            <button class="btn-cancel">Cancelar</button>
+          </div>
+        </div>
+        <div class="booking-item">
+          <div class="booking-date"><div class="booking-day">15</div><div class="booking-month">Abr</div></div>
+          <div class="booking-info"><div class="booking-name">Margarida Silva</div><div class="booking-detail">11:00 · Coleção Signature</div></div>
+          <div class="booking-actions"><span class="confirmed-tag">Confirmada</span></div>
+        </div>
+        <div class="booking-item">
+          <div class="booking-date"><div class="booking-day">16</div><div class="booking-month">Abr</div></div>
+          <div class="booking-info"><div class="booking-name">Sofia Rodrigues</div><div class="booking-detail">15:30 · Primeira visita</div></div>
+          <div class="booking-actions">
+            <button class="btn-confirm" onclick="confirmBooking(this)">Confirmar</button>
+            <button class="btn-cancel">Cancelar</button>
+          </div>
+        </div>
+        <div class="booking-item">
+          <div class="booking-date"><div class="booking-day">18</div><div class="booking-month">Abr</div></div>
+          <div class="booking-info"><div class="booking-name">Inês Costa</div><div class="booking-detail">10:00 · Coleção Flash</div></div>
+          <div class="booking-actions"><span class="confirmed-tag">Confirmada</span></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<a class="wa-btn" href="https://wa.me/351912929646" target="_blank" title="WhatsApp">💬</a>
+
+<script>
+function switchPage(id,el){
+  document.querySelectorAll('.db-page').forEach(function(p){p.classList.remove('active')});
+  document.querySelectorAll('.db-nav-item').forEach(function(n){n.classList.remove('active')});
+  document.getElementById('page-'+id).classList.add('active');
+  el.classList.add('active');
+}
+function toggleChip(el){el.classList.toggle('selected')}
+function saveDraft(){
+  var t=document.getElementById('post-text').value;
+  if(!t.trim()){alert('Escreva algum texto primeiro.');return}
+  alert('Rascunho guardado! Pode retomar quando tiver tempo.');
+}
+function publishNow(){
+  var t=document.getElementById('post-text').value;
+  var chips=document.querySelectorAll('.net-chip.selected');
+  if(!t.trim()){alert('Escreva algum texto primeiro.');return}
+  if(!chips.length){alert('Seleccione pelo menos uma rede.');return}
+  var s=document.getElementById('pub-success');
+  s.style.display='block';
+  document.getElementById('post-text').value='';
+  setTimeout(function(){s.style.display='none'},4000);
+}
+function confirmBooking(btn){
+  var row=btn.closest('.booking-actions');
+  row.innerHTML='<span class="confirmed-tag">Confirmada</span>';
+}
+function previewImage(input){
+  if(input.files&&input.files[0]){
+    var r=new FileReader();
+    r.onload=function(e){
+      var p=document.getElementById('img-preview');
+      p.src=e.target.result;
+      p.style.display='block';
+    };
+    r.readAsDataURL(input.files[0]);
+  }
+}
+</script>
+</body>
+</html>
