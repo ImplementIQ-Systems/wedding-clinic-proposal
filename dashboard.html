@@ -87,6 +87,7 @@
   .btn-cancel{padding:6px 12px;background:#f7f3ef;color:#9a8f87;border:0.5px solid #e0dbd4;border-radius:6px;font-size:11px;cursor:pointer;font-family:inherit;transition:all 0.15s}
   .btn-cancel:hover{background:#fff0f0;color:#e24b4a;border-color:#f09595}
   .confirmed-tag{padding:6px 12px;background:#eaf7f0;color:#27774a;border-radius:6px;font-size:11px;font-weight:500}
+  .cancelled-tag{padding:6px 12px;background:#fff0f0;color:#e24b4a;border-radius:6px;font-size:11px;font-weight:500}
   .db-page{display:none}
   .db-page.active{display:block}
   .divider{height:0.5px;background:#e0dbd4;margin:16px 0}
@@ -123,6 +124,16 @@
         <svg class="db-nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="11" rx="1.5"/><line x1="5" y1="1" x2="5" y2="5"/><line x1="11" y1="1" x2="11" y2="5"/><line x1="2" y1="7" x2="14" y2="7"/></svg>
         Marcações
       </a>
+      <div style="position:absolute;bottom:0;left:0;width:100%;border-top:0.5px solid #e0dbd4;padding:10px 0">
+        <a class="db-nav-item" href="index.html">
+          <svg class="db-nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8l6-6 6 6"/><path d="M4 6v7h3v-3h2v3h3V6"/></svg>
+          Ver site
+        </a>
+        <a class="db-nav-item" href="login.html">
+          <svg class="db-nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 8H3m0 0l2.5-2.5M3 8l2.5 2.5"/><path d="M7 4V3a1 1 0 011-1h4a1 1 0 011 1v10a1 1 0 01-1 1H8a1 1 0 01-1-1v-1"/></svg>
+          Sair
+        </a>
+      </div>
     </nav>
   </aside>
 
@@ -282,7 +293,7 @@
           <div class="booking-info"><div class="booking-name">Ana Ferreira</div><div class="booking-detail">14:00 · Vestido para casamento em Junho</div></div>
           <div class="booking-actions">
             <button class="btn-confirm" onclick="confirmBooking(this)">Confirmar</button>
-            <button class="btn-cancel">Cancelar</button>
+            <button class="btn-cancel" onclick="cancelBooking(this)">Cancelar</button>
           </div>
         </div>
         <div class="booking-item">
@@ -295,7 +306,7 @@
           <div class="booking-info"><div class="booking-name">Sofia Rodrigues</div><div class="booking-detail">15:30 · Primeira visita</div></div>
           <div class="booking-actions">
             <button class="btn-confirm" onclick="confirmBooking(this)">Confirmar</button>
-            <button class="btn-cancel">Cancelar</button>
+            <button class="btn-cancel" onclick="cancelBooking(this)">Cancelar</button>
           </div>
         </div>
         <div class="booking-item">
@@ -337,6 +348,10 @@ function publishNow(){
 function confirmBooking(btn){
   var row=btn.closest('.booking-actions');
   row.innerHTML='<span class="confirmed-tag">Confirmada</span>';
+}
+function cancelBooking(btn){
+  var row=btn.closest('.booking-actions');
+  row.innerHTML='<span class="cancelled-tag">Cancelada</span>';
 }
 function previewImage(input){
   if(input.files&&input.files[0]){
