@@ -38,7 +38,7 @@ Desenvolvido por [ImplementIQ Systems](https://implementiq-systems.github.io/Imp
 
 ### Premium (adicional ao Basic)
 - Dashboard de gestão de conteúdo
-- Publicação simultânea em Instagram, Facebook e TikTok
+- Publicação simultânea em Instagram e Facebook (TikTok disponível como adicional, sob consulta)
 - Rascunhos automáticos para retomar quando conveniente
 
 ---
