@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sylvia — Wedding Clinic</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Jost',sans-serif;color:#2c2825;background:#ffffff}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:18px 48px;background:#ffffff;border-bottom:0.5px solid #ede8e2;position:sticky;top:0;z-index:100}
+  .logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;letter-spacing:0.15em;color:#2c2825}
+  .back-link{font-size:11px;font-weight:300;letter-spacing:0.12em;color:#9a8f87;text-decoration:none;text-transform:uppercase}
+  .back-link:hover{color:#2c2825}
+  .detail{display:grid;grid-template-columns:1fr 1fr;gap:0;padding:0}
+  .detail-img{aspect-ratio:2/3;background:#ede8e2;overflow:hidden}
+  .detail-img img{width:100%;height:100%;object-fit:cover}
+  .detail-info{padding:64px 56px;display:flex;flex-direction:column;justify-content:center}
+  .detail-tag{font-size:10px;letter-spacing:0.28em;color:#b8956a;text-transform:uppercase;margin-bottom:16px;font-weight:300}
+  .detail-name{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;color:#2c2825;font-style:italic;margin-bottom:18px}
+  .detail-desc{font-size:13px;color:#9a8f87;font-weight:300;line-height:1.85;margin-bottom:28px;max-width:420px}
+  .detail-meta{display:flex;flex-direction:column;gap:10px;margin-bottom:36px}
+  .meta-row{font-size:12px;color:#6b6460;font-weight:300}
+  .meta-row strong{color:#2c2825;font-weight:400}
+  .btn{display:inline-block;padding:13px 36px;border:0.5px solid #2c2825;color:#2c2825;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;font-weight:300;background:transparent;text-decoration:none;transition:all 0.25s}
+  .btn:hover{background:#2c2825;color:#ffffff}
+  .btn-outline{border-color:#b8956a;color:#b8956a;margin-left:14px}
+  .btn-outline:hover{background:#b8956a;color:#ffffff}
+  footer{background:#f7f3ef;padding:36px 48px;display:flex;align-items:center;justify-content:space-between;border-top:0.5px solid #ddd6cc}
+  .footer-logo{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:300;color:#2c2825;letter-spacing:0.15em;font-style:italic}
+  .footer-info{font-size:11px;color:#9a8f87;font-weight:300;line-height:1.9;text-align:center}
+  @media(max-width:700px){
+    nav{padding:14px 20px}
+    .detail{grid-template-columns:1fr}
+    .detail-info{padding:32px 20px}
+    .detail-name{font-size:32px}
+    footer{flex-direction:column;gap:20px;text-align:center;padding:28px 20px}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Wedding Clinic</div>
+  <a href="index-light.html#catalogo" class="back-link">← Voltar ao catálogo</a>
+</nav>
+
+<div class="detail">
+  <div class="detail-img">
+    <img src="https://static.wixstatic.com/media/15b38d_03e3cc5643794a8fbfa5de9a2d686bf9~mv2.jpeg/v1/fill/w_980,h_1470,al_c,q_85,enc_avif,quality_auto/15b38d_03e3cc5643794a8fbfa5de9a2d686bf9~mv2.jpeg" alt="Sylvia">
+  </div>
+  <div class="detail-info">
+    <div class="detail-tag">Coleção Signature</div>
+    <div class="detail-name">Sylvia</div>
+    <div class="detail-desc">Um vestido que combina elegância e sofisticação, pensado para a noiva que deseja sentir-se confiante e radiante no seu grande dia. Detalhes cuidadosamente trabalhados, num caimento que valoriza cada silhueta.</div>
+    <div class="detail-meta">
+      <div class="meta-row">Coleção: <strong>Signature</strong></div>
+      <div class="meta-row">Disponibilidade: <strong>Consulta presencial, por marcação</strong></div>
+      <div class="meta-row">Preço: <strong>Sob consulta</strong></div>
+    </div>
+    <a href="index-light.html#marcacao" class="btn">Marcar visita</a>
+    <a href="https://wa.me/351912929646?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20o%20vestido%20Sylvia" class="btn btn-outline" target="_blank">Pedir orçamento</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">Wedding Clinic</div>
+  <div class="footer-info">
+    Av. 1º de Dezembro de 1640, nº516, Casal do Marco, Seixal<br>
+    noivas@weddingclinic.pt &nbsp;·&nbsp; 912 929 646
+  </div>
+</footer>
+
+</body>
+</html>
