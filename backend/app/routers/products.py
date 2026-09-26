@@ -1,4 +1,3 @@
-import uuid
 from pathlib import Path
 
 from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
@@ -9,14 +8,10 @@ from app.core.deps import get_current_user
 from app.db.session import get_db
 from app.models.product import Product, ProductImage
 from app.schemas.product import ProductCreate, ProductImageOut, ProductOut, ProductUpdate
+from app.services.image import process_upload
 
 router = APIRouter(prefix="/products", tags=["products"])
 
-
-def _upload_dir() -> Path:
-    p = Path(settings.UPLOAD_DIR)
-    p.mkdir(parents=True, exist_ok=True)
-    return p
 
 
 @router.get("/", response_model=list[ProductOut])
@@ -82,12 +77,11 @@ async def upload_image(
     if not product:
         raise HTTPException(404, "Produto não encontrado")
 
-    ext = Path(file.filename).suffix if file.filename else ".jpg"
-    filename = f"{uuid.uuid4()}{ext}"
-    dest = _upload_dir() / filename
-
     content = await file.read()
-    dest.write_bytes(content)
+    try:
+        full_url, _thumb_url = process_upload(content, Path(settings.UPLOAD_DIR))
+    except ValueError as exc:
+        raise HTTPException(400, str(exc)) from exc
 
     if capa:
         db.query(ProductImage).filter(
@@ -97,7 +91,7 @@ async def upload_image(
     ordem = db.query(ProductImage).filter(ProductImage.product_id == id).count()
     image = ProductImage(
         product_id=id,
-        url=f"/uploads/{filename}",
+        url=full_url,
         ordem=ordem,
         capa=capa,
     )
